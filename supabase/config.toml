@@ -1,0 +1,16 @@
+# Configuração Supabase local (opcional)
+# Execute: supabase init (se ainda não fez)
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public"]
+
+[db]
+port = 54322
+shadow_port = 54320
+
+[studio]
+enabled = true
+port = 54323
