@@ -48,9 +48,10 @@ export function InitialBalanceForm({
       return;
     }
 
+    const userId = Array.isArray(user.id) ? user.id[0] : user.id;
     const { error: upsertError } = await supabase.from('monthly_balances').upsert(
       {
-        user_id: user.id,
+        user_id: userId,
         year,
         month,
         initial_balance: amountNum,
