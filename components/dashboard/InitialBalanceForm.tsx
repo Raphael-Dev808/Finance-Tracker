@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import type { Database } from '@/types/database.types';
 
 interface InitialBalanceFormProps {
   year: number;
@@ -48,18 +49,16 @@ export function InitialBalanceForm({
       return;
     }
 
-    const userId = Array.isArray(user.id) ? user.id[0] : user.id;
-    const { error: upsertError } = await supabase.from('monthly_balances').upsert(
-      {
-        user_id: userId,
-        year,
-        month,
-        initial_balance: amountNum,
-      },
-      {
-        onConflict: 'monthly_balances_user_id_year_month_key',
-      }
-    );
+    type MonthlyBalanceInsert = Database['public']['Tables']['monthly_balances']['Insert'];
+    const row: MonthlyBalanceInsert = {
+      user_id: user.id,
+      year,
+      month,
+      initial_balance: amountNum,
+    };
+    const { error: upsertError } = await supabase
+      .from('monthly_balances')
+      .upsert(row, { onConflict: 'user_id,year,month' });
 
     setLoading(false);
 
