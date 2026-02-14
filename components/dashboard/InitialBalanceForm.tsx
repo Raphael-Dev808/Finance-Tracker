@@ -56,7 +56,7 @@ export function InitialBalanceForm({
         initial_balance: amountNum,
       },
       {
-        onConflict: ['user_id', 'year', 'month'],
+        onConflict: 'monthly_balances_user_id_year_month_key',
       }
     );
 

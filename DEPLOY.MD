@@ -1,155 +1,113 @@
-# Deploy - Finance Tracker
+# Guia de Deploy - Finance Tracker
 
-Para o Finance Tracker ficar online 24/7 e qualquer pessoa acessar pelo link.
-
-## Visão Geral
-
-- **Frontend + API**: Next.js (full-stack) → **Vercel** (principal) ou **Render** (alternativa)
-- **Banco de dados**: **Supabase** (PostgreSQL + Auth)
-- **Domínio**: Opcional (Vercel/Render oferecem subdomínio grátis)
-
-O Next.js roda tanto o frontend quanto as API Routes/Server Actions. O Supabase fornece banco e autenticação.
+Este projeto é **Next.js 14** com **Supabase**. Segue como fazer deploy na **Vercel** e no **Render**.
 
 ---
 
-## 1. Preparação - Supabase
+## ⚠️ Antes de qualquer deploy
 
-1. Crie um projeto em [supabase.com](https://supabase.com)
-2. Anote:
-   - **Project URL** (ex: `https://xxxx.supabase.co`)
-   - **Anon/Public Key** (em Project Settings → API)
-3. Execute as migrations (veja [DATABASE_SCHEMA.MD](DATABASE_SCHEMA.MD))
-4. Em Authentication → URL Configuration:
-   - **Site URL**: `https://seu-app.vercel.app` (atualize após deploy)
-   - **Redirect URLs**: adicione `https://seu-app.vercel.app/**`
+1. **Não faça commit do arquivo `.env`** – suas chaves não devem ir para o repositório.
+2. Adicione `.env` e `.env.local` ao `.gitignore` (se ainda não estiver).
+3. Você vai configurar as **mesmas variáveis de ambiente** na plataforma de deploy.
 
----
-
-## 2. Deploy na Vercel (Principal)
-
-1. Crie conta em [vercel.com](https://vercel.com) (pode usar GitHub)
-2. **Add New → Project** e importe o repositório
-3. Configure:
-   - **Framework Preset**: Next.js (detectado automaticamente)
-   - **Root Directory**: raiz do repositório
-   - **Build Command**: `npm run build` (padrão)
-   - **Output Directory**: `.next` (padrão)
-   - **Install Command**: `npm install`
-
-4. Em **Environment Variables** adicione:
-
-   | Nome | Valor |
-   |------|-------|
-   | `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6...` |
-
-5. Clique em **Deploy**
-6. Anote a URL: `https://finance-tracker-xxx.vercel.app`
-
-### Atualizar Supabase
-- Em Supabase → Authentication → URL Configuration
-- **Site URL**: `https://finance-tracker-xxx.vercel.app`
-- **Redirect URLs**: `https://finance-tracker-xxx.vercel.app/**`
+Variáveis necessárias:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
 ---
 
-## 3. Deploy no Render (Alternativa)
+## 1. Deploy na Vercel (recomendado para Next.js)
 
-Use o Render se preferir hospedar fora da Vercel.
+A Vercel é a plataforma oficial do Next.js e costuma ser a opção mais simples.
 
-1. Crie conta em [render.com](https://render.com)
-2. **New → Web Service**
-3. Conecte o repositório GitHub
-4. Configure:
+### Passo a passo
 
-   | Campo | Valor |
-   |-------|-------|
-   | **Name** | `finance-tracker` |
-   | **Region** | Oregon (US West) ou São Paulo (se disponível) |
-   | **Root Directory** | (vazio = raiz) |
-   | **Runtime** | Node |
-   | **Build Command** | `npm install && npm run build` |
-   | **Start Command** | `npm start` ou `npx next start` |
+1. **Crie uma conta** em [vercel.com](https://vercel.com) (pode usar login com GitHub).
 
-5. Em **Environment** adicione:
+2. **Conecte o repositório**
+   - Clique em **Add New** → **Project**.
+   - Importe o repositório do GitHub (ou GitLab/Bitbucket) onde está o Finance Tracker.
+   - Se o projeto ainda não estiver no GitHub, faça push primeiro.
 
-   | Key | Value |
-   |----|-------|
-   | `NODE_ENV` | `production` |
-   | `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6...` |
+3. **Configuração do projeto**
+   - **Framework Preset**: Vercel detecta Next.js automaticamente.
+   - **Root Directory**: deixe em branco se o código está na raiz do repo.
+   - **Build Command**: `npm run build` (padrão).
+   - **Output Directory**: deixe o padrão (Next.js cuida disso).
+   - **Install Command**: `npm install`.
 
-6. **Create Web Service**
-7. Anote a URL: `https://finance-tracker.onrender.com`
+4. **Variáveis de ambiente**
+   - Na mesma tela (ou em **Settings → Environment Variables**), adicione:
+     - `NEXT_PUBLIC_SUPABASE_URL` = sua URL do Supabase
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = sua chave anônima do Supabase
+   - Marque **Production**, **Preview** e **Development** se quiser usar em todos os ambientes.
 
-**Observação:** No plano free, o serviço "dorme" após ~15 min sem acesso. A primeira requisição pode demorar 30-60 segundos.
+5. **Deploy**
+   - Clique em **Deploy**.
+   - Cada push na branch principal (ex.: `main`) gera um novo deploy automático.
 
-### render.yaml (opcional)
+### Deploy via CLI (opcional)
 
-Crie na raiz do projeto para deploy via Git:
-
-```yaml
-services:
-  - type: web
-    name: finance-tracker
-    runtime: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        sync: false
+```bash
+npm i -g vercel
+vercel login
+vercel
 ```
 
----
-
-## 4. Resumo das URLs
-
-| Onde | URL exemplo |
-|------|-------------|
-| **Site (Vercel)** | `https://finance-tracker.vercel.app` |
-| **Site (Render)** | `https://finance-tracker.onrender.com` |
-| **Supabase Dashboard** | `https://app.supabase.com/project/xxx` |
+Siga as perguntas; depois configure as variáveis no dashboard da Vercel.
 
 ---
 
-## 5. Atualizar o site depois
+## 2. Deploy no Render
 
-- **Push no Git** → Vercel e Render fazem deploy automático (se o repositório estiver conectado)
-- **Migrations do banco**: rode localmente com `supabase db push` (apontando para o projeto remoto) ou via Supabase Dashboard → SQL Editor
-- **Variáveis de ambiente**: altere no painel da Vercel/Render e faça um redeploy se necessário
+No Render você pode publicar o Next.js como **Web Service** (recomendado para usar SSR e rotas dinâmicas).
+
+### Passo a passo
+
+1. **Conta** em [render.com](https://render.com) (login com GitHub).
+
+2. **Novo Web Service**
+   - **Dashboard** → **New +** → **Web Service**.
+   - Conecte o repositório do projeto e selecione o repo do Finance Tracker.
+
+3. **Configurações do serviço**
+   - **Name**: ex. `finance-tracker`.
+   - **Region**: escolha a mais próxima (ex. Oregon).
+   - **Branch**: `main` (ou a branch que você usa).
+   - **Runtime**: **Node**.
+   - **Build Command**:
+     ```bash
+     npm install && npm run build
+     ```
+   - **Start Command**:
+     ```bash
+     npm start
+     ```
+   - **Instance Type**: Free (ou pago, se preferir).
+
+4. **Variáveis de ambiente**
+   - Em **Environment** (ou **Environment Variables**), adicione:
+     - `NEXT_PUBLIC_SUPABASE_URL` = sua URL do Supabase
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = sua chave anônima do Supabase
+
+5. **Deploy**
+   - Clique em **Create Web Service**.
+   - O primeiro deploy pode levar alguns minutos.
+
+### Observação para Next.js no Render
+
+- No plano **Free**, o serviço “dorme” após inatividade; a primeira requisição pode demorar mais.
+- A URL será algo como: `https://finance-tracker-xxxx.onrender.com`.
 
 ---
 
-## 6. Domínio próprio (opcional)
+## Resumo rápido
 
-### Vercel
-1. Project Settings → Domains
-2. Adicione `www.seudominio.com.br`
-3. Configure os registros DNS conforme instruções da Vercel
+| Plataforma | Quando usar | Deploy automático |
+|------------|-------------|-------------------|
+| **Vercel** | Next.js, preview por branch, edge | Sim (push no Git) |
+| **Render** | Backend Node, DB no mesmo ecossistema, preferência por Render | Sim (push no Git) |
 
-### Render
-1. Settings → Custom Domains
-2. Adicione o domínio e configure o CNAME
+Para este projeto (Next.js + Supabase), **Vercel** costuma ser a opção mais direta; use **Render** se quiser manter tudo na mesma plataforma ou já tiver outros serviços lá.
 
-### Supabase
-- Atualize **Site URL** e **Redirect URLs** com o novo domínio
-
----
-
-## 7. Checklist pós-deploy
-
-- [ ] Login funciona com email/senha
-- [ ] Cadastro cria usuário e perfil
-- [ ] Transações aparecem no dashboard
-- [ ] Filtro por mês funciona
-- [ ] Gráfico carrega corretamente
-- [ ] Exportar PDF gera arquivo
-- [ ] Categorias padrão existem para novos usuários
-
----
-
-**Última Atualização**: Fevereiro 2026
+Depois do deploy, teste login, cadastro e as telas que usam Supabase para garantir que as variáveis estão corretas.
