@@ -156,6 +156,19 @@ Crie `vercel.json` na raiz do projeto:
 
 ---
 
+## 4. Confirmação de email (opcional)
+
+Para exigir que o usuário confirme o email ao criar conta:
+
+1. Acesse o [Dashboard do Supabase](https://supabase.com/dashboard).
+2. Selecione seu projeto → **Authentication** → **Providers** → **Email**.
+3. Ative **Confirm email**.
+4. Personalize o template em **Authentication** → **Email Templates** (opcional).
+
+Quando ativado, o usuário recebe um link no email e precisa clicar para confirmar antes de entrar.
+
+---
+
 ## Resumo rápido
 
 | Plataforma | Quando usar | Deploy automático |

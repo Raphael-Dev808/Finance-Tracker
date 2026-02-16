@@ -14,6 +14,7 @@ export default function CadastroPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +23,7 @@ export default function CadastroPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -35,6 +36,14 @@ export default function CadastroPage() {
 
     if (signUpError) {
       setError(signUpError.message);
+      return;
+    }
+
+    // Se confirmação de email está ativa e o usuário precisa confirmar
+    if (data.user && !data.session && data.user.identities?.length) {
+      setSuccess(
+        'Conta criada! Verifique seu email e clique no link para confirmar sua conta antes de entrar.'
+      );
       return;
     }
 
@@ -60,6 +69,11 @@ export default function CadastroPage() {
         {error && (
           <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
             {error}
+          </div>
+        )}
+        {success && (
+          <div className="p-4 rounded-xl bg-accent-500/10 border border-accent-500/20 text-accent-400 text-sm">
+            {success}
           </div>
         )}
 

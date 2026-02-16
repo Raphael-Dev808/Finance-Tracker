@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Wallet } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, setRememberMe } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
@@ -12,14 +12,21 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMeState] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('ft:rememberMe');
+    if (stored !== null) setRememberMeState(stored === 'true');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
+    setRememberMe(rememberMe);
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
@@ -75,6 +82,16 @@ export default function LoginPage() {
           placeholder="••••••••"
           required
         />
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMeState(e.target.checked)}
+            className="rounded border-slate-600 bg-slate-800 text-primary-500 focus:ring-primary-500"
+          />
+          <span className="text-sm text-slate-400">Lembrar de mim</span>
+        </label>
 
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? 'Entrando...' : 'Entrar'}
