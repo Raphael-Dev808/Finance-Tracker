@@ -13,9 +13,9 @@ export function createClient() {
   return createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: {
       storage: {
-        getItem: (key) => getAuthStorage().getItem(key),
-        setItem: (key, value) => getAuthStorage().setItem(key, value),
-        removeItem: (key) => getAuthStorage().removeItem(key),
+        getItem: (key: string) => getAuthStorage().getItem(key),
+        setItem: (key: string, value: string) => getAuthStorage().setItem(key, value),
+        removeItem: (key: string) => getAuthStorage().removeItem(key),
       },
     },
   });
