@@ -66,7 +66,7 @@ export function FloatingActionButton({ type }: FloatingActionButtonProps) {
                 onClick={() => handleOptionClick('despesa')}
                 className="
                   px-4 py-2.5 rounded-xl text-sm font-medium
-                  bg-slate-700 hover:bg-slate-600 text-slate-200
+                  bg-accent-500/20 hover:bg-accent-500/30 text-accent-400
                   transition-colors flex items-center gap-2
                 "
               >
@@ -78,7 +78,7 @@ export function FloatingActionButton({ type }: FloatingActionButtonProps) {
                 onClick={() => handleOptionClick('receita')}
                 className="
                   px-4 py-2.5 rounded-xl text-sm font-medium
-                  bg-income/20 hover:bg-income/30 text-income
+                  bg-accent-500/20 hover:bg-accent-500/30 text-accent-400
                   transition-colors flex items-center gap-2
                 "
               >
