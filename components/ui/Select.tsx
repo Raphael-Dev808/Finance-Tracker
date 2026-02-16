@@ -29,7 +29,7 @@ export function Select({
           bg-slate-800/50 border border-slate-600
           text-slate-200
           transition-colors duration-200
-          focus:outline-none focus:ring-1 focus:border-teal-500 focus:ring-teal-500/50
+          focus:outline-none focus:ring-1 focus:border-primary-500 focus:ring-primary-500/50
           disabled:opacity-50 disabled:cursor-not-allowed
           ${className}
         `}

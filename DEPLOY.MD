@@ -101,6 +101,61 @@ No Render você pode publicar o Next.js como **Web Service** (recomendado para u
 
 ---
 
+## 3. Cron Job para manter o site acordado
+
+Se você usa **Render** (plano Free) ou outra plataforma que dorme por inatividade, configure um cron para acordar o site periodicamente.
+
+### Endpoint disponível
+
+O projeto inclui a rota `/api/cron/ping`, leve e rápida:
+
+```
+https://seu-site.com/api/cron/ping
+```
+
+### Como configurar
+
+**Opção A: cron-job.org (gratuito)**
+
+1. Crie conta em [cron-job.org](https://cron-job.org).
+2. **New Cronjob**:
+   - **Title**: `Finance Tracker - Keep Awake`
+   - **URL**: `https://seu-dominio.onrender.com/api/cron/ping` (ou sua URL real)
+   - **Schedule**: a cada **14 minutos** (ex: `*/14 * * * *`)
+3. Salve. O site será acessado automaticamente e não dormirá.
+
+**Opção B: UptimeRobot (gratuito)**
+
+1. Crie conta em [uptimerobot.com](https://uptimerobot.com).
+2. **Add New Monitor**:
+   - **Monitor Type**: HTTP(s)
+   - **Friendly name**: `Finance Tracker`
+   - **URL**: `https://seu-dominio.com/api/cron/ping`
+   - **Monitoring Interval**: 5 minutos (plano gratuito)
+3. Salve. Além de manter acordado, você ganha alertas se o site cair.
+
+**Opção C: Vercel Cron** (requer plano Pro)
+
+Crie `vercel.json` na raiz do projeto:
+
+```json
+{
+  "crons": [
+    {
+      "path": "/api/cron/ping",
+      "schedule": "*/14 * * * *"
+    }
+  ]
+}
+```
+
+### Intervalo recomendado
+
+- **Render**: ping a cada **10–14 minutos** (dorme após ~15 min sem requisições).
+- **Vercel**: geralmente não precisa; cold start é rápido.
+
+---
+
 ## Resumo rápido
 
 | Plataforma | Quando usar | Deploy automático |

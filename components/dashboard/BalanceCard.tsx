@@ -41,13 +41,13 @@ export function BalanceCard({
             {formatCurrency(despesas)}
           </p>
         </Card>
-        <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border-teal-500/30">
+        <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border-primary-500/30">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="text-slate-400 text-sm">Saldo do mês</p>
               <p
                 className={`font-mono text-xl mt-1 ${
-                  saldo >= 0 ? 'text-teal-400' : 'text-expense'
+                  saldo >= 0 ? 'text-primary-400' : 'text-expense'
                 }`}
               >
                 {formatCurrency(saldo)}

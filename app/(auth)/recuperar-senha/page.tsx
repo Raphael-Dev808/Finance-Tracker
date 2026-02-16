@@ -41,8 +41,8 @@ export default function RecuperarSenhaPage() {
           <span className="font-heading font-semibold">Finance Tracker</span>
         </Link>
 
-        <div className="p-6 rounded-xl bg-teal-500/10 border border-teal-500/20">
-          <h1 className="font-heading font-bold text-xl text-teal-400 mb-2">
+        <div className="p-6 rounded-xl bg-primary-500/10 border border-primary-500/20">
+          <h1 className="font-heading font-bold text-xl text-primary-400 mb-2">
             Email enviado
           </h1>
           <p className="text-slate-300 text-sm mb-6">
@@ -92,7 +92,7 @@ export default function RecuperarSenhaPage() {
       </form>
 
       <p className="mt-6 text-center text-slate-400 text-sm">
-        <Link href="/login" className="text-teal-500 hover:text-teal-400">
+        <Link href="/login" className="text-primary-500 hover:text-primary-400">
           Voltar ao login
         </Link>
       </p>

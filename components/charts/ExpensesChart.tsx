@@ -13,7 +13,7 @@ interface ExpensesChartProps {
   transactions: Transaction[];
 }
 
-const DEFAULT_COLORS = ['#14b8a6', '#0d9488', '#10b981', '#3b82f6', '#8b5cf6', '#ef4444'];
+const DEFAULT_COLORS = ['#789a99', '#FFD2C2', '#10b981', '#3b82f6', '#8b5cf6', '#ef4444'];
 
 export function ExpensesChart({ transactions }: ExpensesChartProps) {
   const data = useMemo(() => {

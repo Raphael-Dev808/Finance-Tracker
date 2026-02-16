@@ -33,7 +33,7 @@ export function Sidebar() {
                 flex items-center gap-3 px-4 py-3 rounded-xl
                 transition-colors duration-200
                 ${isActive
-                  ? 'bg-teal-500/20 text-teal-400'
+                  ? 'bg-primary-500/20 text-primary-400'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
                 }
               `}

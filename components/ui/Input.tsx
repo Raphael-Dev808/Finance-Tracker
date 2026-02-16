@@ -23,7 +23,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             transition-colors duration-200
             focus:outline-none focus:ring-1
             disabled:opacity-50 disabled:cursor-not-allowed
-            ${error ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' : 'border-slate-600 focus:border-teal-500 focus:ring-teal-500/50'}
+            ${error ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/50' : 'border-slate-600 focus:border-primary-500 focus:ring-primary-500/50'}
             ${className}
           `}
           {...props}

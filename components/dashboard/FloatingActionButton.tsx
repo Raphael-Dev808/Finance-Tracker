@@ -92,9 +92,9 @@ export function FloatingActionButton({ type }: FloatingActionButtonProps) {
             onClick={handleMainClick}
             className="
               w-14 h-14 rounded-full
-              bg-teal-500 hover:bg-teal-600
+              bg-primary-500 hover:bg-primary-600
               text-slate-900
-              shadow-lg shadow-teal-500/25
+              shadow-lg shadow-primary-500/25
               flex items-center justify-center
               transition-all duration-200 hover:scale-105
             "
