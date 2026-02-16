@@ -10,6 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#FFD2C2',
+          400: '#ffe4dc',
+          500: '#FFD2C2',
+          600: '#e8b8a8',
+        },
+        accent: {
           DEFAULT: '#789a99',
           400: '#8dadac',
           500: '#789a99',
@@ -31,6 +37,11 @@ const config: Config = {
           700: '#4d6463',
           800: '#3b4c4b',
           900: '#2a3736',
+        },
+        aqua: {
+          400: '#8dadac',
+          500: '#789a99',
+          600: '#5f7c7b',
         },
         income: '#789a99',
         expense: '#ef4444',
