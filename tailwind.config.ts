@@ -43,7 +43,7 @@ const config: Config = {
           500: '#789a99',
           600: '#5f7c7b',
         },
-        income: '#789a99',
+        income: '#10b981',
         expense: '#ef4444',
       },
       fontFamily: {

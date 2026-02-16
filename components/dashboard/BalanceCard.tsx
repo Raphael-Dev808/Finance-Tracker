@@ -29,9 +29,9 @@ export function BalanceCard({
   return (
     <>
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border-peach-500/20">
+        <Card className="bg-gradient-to-br from-slate-800 to-slate-900">
           <p className="text-slate-400 text-sm">Receitas</p>
-          <p className="font-mono text-xl text-peach-500 mt-1">
+          <p className="font-mono text-xl text-income mt-1">
             {formatCurrency(receitas)}
           </p>
         </Card>
@@ -47,7 +47,7 @@ export function BalanceCard({
               <p className="text-slate-400 text-sm">Saldo do mês</p>
               <p
                 className={`font-mono text-xl mt-1 ${
-                  saldo >= 0 ? 'text-primary-400' : 'text-expense'
+                  saldo >= 0 ? 'text-income' : 'text-expense'
                 }`}
               >
                 {formatCurrency(saldo)}
