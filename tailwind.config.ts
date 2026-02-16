@@ -32,7 +32,7 @@ const config: Config = {
           800: '#3b4c4b',
           900: '#2a3736',
         },
-        income: '#10b981',
+        income: '#789a99',
         expense: '#ef4444',
       },
       fontFamily: {

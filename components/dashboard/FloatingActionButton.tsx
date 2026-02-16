@@ -93,7 +93,7 @@ export function FloatingActionButton({ type }: FloatingActionButtonProps) {
             className="
               w-14 h-14 rounded-full
               bg-primary-500 hover:bg-primary-600
-              text-slate-900
+              text-white
               shadow-lg shadow-primary-500/25
               flex items-center justify-center
               transition-all duration-200 hover:scale-105
